@@ -2,20 +2,20 @@
 
 namespace App\DataFixtures;
 
+use App\Entity\Category;
 use App\Entity\Recipe;
-use App\Entity\RecipeCategories;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use Symfony\Component\VarDumper\VarDumper;
 
-class AppFixtures extends Fixture
+class TagsAppFixtures extends Fixture
 {
     public function load(ObjectManager $manager): void
     {
         $curl = curl_init();
 
         curl_setopt_array($curl, [
-            CURLOPT_URL => "https://tasty.p.rapidapi.com/recipes/list?from=0&size=200",
+            CURLOPT_URL => "https://tasty.p.rapidapi.com/tags/list",
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_FOLLOWLOCATION => true,
             CURLOPT_ENCODING => "",
@@ -30,20 +30,15 @@ class AppFixtures extends Fixture
         ]);
 
         $response = json_decode(curl_exec($curl));
-        $recipes = $response->results;
-        foreach ($recipes as $recipe) {
-            $newRecipe = new Recipe();
-            $newRecipe -> setId($recipe->id);
-            $newRecipe -> setName($recipe->name);
-            $newRecipe -> setDescription($recipe->description);
-            $newRecipe -> setImage($recipe->thumbnail_url);
-            $manager->persist($newRecipe);
+        $tags = $response->results;
+        foreach ($tags as $tag) {
 
-//            $tags = $recipe->tags;
-//            foreach ($tags as $tag){
-//                $newRecipeCategories = new RecipeCategories($recipe->id, $tag->id);
-//                $manager->persist($newRecipeCategories);
-//            }
+            $newCategory = new Category();
+            $newCategory -> setId($tag->id);
+            $newCategory -> setName($tag->display_name);
+            $newCategory -> setType($tag->type);
+
+            $manager->persist($newCategory);
         }
 
         $err = curl_error($curl);

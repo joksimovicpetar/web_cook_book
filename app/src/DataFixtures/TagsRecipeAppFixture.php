@@ -4,12 +4,23 @@ namespace App\DataFixtures;
 
 use App\Entity\Recipe;
 use App\Entity\RecipeCategories;
+use App\Service\CategoryService;
+use App\Service\RecipeService;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use Symfony\Component\VarDumper\VarDumper;
 
-class AppFixtures extends Fixture
+class TagsRecipeAppFixture extends Fixture
 {
+    private CategoryService $categoryService;
+    private RecipeService $recipeService;
+
+    public function __construct(CategoryService $categoryService, RecipeService $recipeService)
+    {
+        $this->categoryService = $categoryService;
+        $this->recipeService = $recipeService;
+    }
+
     public function load(ObjectManager $manager): void
     {
         $curl = curl_init();
@@ -32,18 +43,21 @@ class AppFixtures extends Fixture
         $response = json_decode(curl_exec($curl));
         $recipes = $response->results;
         foreach ($recipes as $recipe) {
-            $newRecipe = new Recipe();
-            $newRecipe -> setId($recipe->id);
-            $newRecipe -> setName($recipe->name);
-            $newRecipe -> setDescription($recipe->description);
-            $newRecipe -> setImage($recipe->thumbnail_url);
-            $manager->persist($newRecipe);
+            $newRecipe = $this->recipeService->find($recipe->id);
+//            $newRecipe = new Recipe();
+//            $newRecipe -> setId($recipe->id);
+//            $newRecipe -> setName($recipe->name);
+//            $newRecipe -> setDescription($recipe->description);
+//            $newRecipe -> setImage($recipe->thumbnail_url);
+            $recipeTags = $recipe->tags;
 
-//            $tags = $recipe->tags;
-//            foreach ($tags as $tag){
-//                $newRecipeCategories = new RecipeCategories($recipe->id, $tag->id);
-//                $manager->persist($newRecipeCategories);
-//            }
+            foreach ($recipeTags as $recipeTag){
+                $tag = $this->categoryService->find($recipeTag->id);
+//                VarDumper::dump($recipeTag);
+//                VarDumper::dump($tag);exit;
+                $newRecipeCategories = new RecipeCategories($newRecipe, $tag);
+                $manager->persist($newRecipeCategories);
+            }
         }
 
         $err = curl_error($curl);

@@ -11,25 +11,36 @@ use Doctrine\ORM\Mapping as ORM;
 class Category
 {
     #[ORM\Id]
-    #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
-    #[ORM\OneToMany(mappedBy: 'category', targetEntity: Recipe::class)]
-    private Collection $recipes;
+    #[ORM\Column(length: 255)]
+    private ?string $type = null;
+
+    #[ORM\OneToMany(mappedBy: 'category', targetEntity: RecipeCategories::class)]
+    private Collection $recipeCategories;
 
     public function __construct()
     {
-        $this->recipes = new ArrayCollection();
+        $this->recipeCategories = new ArrayCollection();
     }
 
     public function getId(): ?int
     {
         return $this->id;
     }
+
+    /**
+     * @param int|null $id
+     */
+    public function setId(?int $id): void
+    {
+        $this->id = $id;
+    }
+
 
     public function getName(): ?string
     {
@@ -43,30 +54,47 @@ class Category
         return $this;
     }
 
-    /**
-     * @return Collection<int, Recipe>
-     */
-    public function getRecipes(): Collection
+
+    public function getType(): ?string
     {
-        return $this->recipes;
+        return $this->type;
     }
 
-    public function addRecipe(Recipe $recipe): self
+    public function setType(string $type): self
     {
-        if (!$this->recipes->contains($recipe)) {
-            $this->recipes->add($recipe);
-            $recipe->setCategory($this);
+        $this->type = $type;
+
+        return $this;
+    }
+
+    public function getRecipeCategories(): ?RecipeCategories
+    {
+        return $this->recipeCategories;
+    }
+
+    public function setRecipeCategories(?RecipeCategories $recipeCategories): self
+    {
+        $this->recipeCategories = $recipeCategories;
+
+        return $this;
+    }
+
+    public function addRecipeCategory(RecipeCategories $recipeCategory): self
+    {
+        if (!$this->recipeCategories->contains($recipeCategory)) {
+            $this->recipeCategories->add($recipeCategory);
+            $recipeCategory->setCategory($this);
         }
 
         return $this;
     }
 
-    public function removeRecipe(Recipe $recipe): self
+    public function removeRecipeCategory(RecipeCategories $recipeCategory): self
     {
-        if ($this->recipes->removeElement($recipe)) {
+        if ($this->recipeCategories->removeElement($recipeCategory)) {
             // set the owning side to null (unless already changed)
-            if ($recipe->getCategory() === $this) {
-                $recipe->setCategory(null);
+            if ($recipeCategory->getCategory() === $this) {
+                $recipeCategory->setCategory(null);
             }
         }
 
