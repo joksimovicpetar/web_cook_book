@@ -9,6 +9,7 @@ async function selectedSearchType(targetRoute, type) {
         const response = await searchTypeResponse.json();
         document.getElementById("radio-button-container").innerHTML += response.html;
         selectSearchType();
+        selectSearchCategory();
         // window.location.reload();
 
     }

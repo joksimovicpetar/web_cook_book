@@ -1,0 +1,12 @@
+{% for recipe in recipes %}
+{#    {% if currentOrder and currentOrder.bowl %}#}
+{#        {% set activeBowl = bowl.id == currentOrder.bowl.id %}#}
+{#    {% else %}#}
+{#        {% set activeBowl = null %}#}
+{#    {% endif %}#}
+{#    , 'isActive': activeBowl#}
+    <div class="col l4 s6 recipe-card-js">
+        {% include 'main/recipe-card.html.twig' with {'recipe': recipe} %}
+    </div>
+
+{% endfor %}

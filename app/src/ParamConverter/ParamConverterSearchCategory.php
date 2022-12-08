@@ -2,13 +2,13 @@
 
 namespace App\ParamConverter;
 
-use App\DataTransferObjects\Search;
+use App\DataTransferObjects\SearchCategory;
 use Sensio\Bundle\FrameworkExtraBundle\Request\ParamConverter\ParamConverterInterface;
 use Symfony\Component\Serializer\SerializerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ConfigurationInterface;
 use Symfony\Component\HttpFoundation\Request;
 
-class ParamConverterSearchType implements ParamConverterInterface
+class ParamConverterSearchCategory implements ParamConverterInterface
 {
 
     private SerializerInterface $serializer;
@@ -21,7 +21,7 @@ class ParamConverterSearchType implements ParamConverterInterface
     public function supports(ConfigurationInterface $configuration)
     {
 
-        if ($configuration->getClass() != Search::class) {
+        if ($configuration->getClass() != SearchCategory::class) {
             return false;
         }
         return true;

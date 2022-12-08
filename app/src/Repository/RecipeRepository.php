@@ -39,6 +39,22 @@ class RecipeRepository extends ServiceEntityRepository
         }
     }
 
+    public function findRecipesForSpecificCategory($searchCategory){
+        return $this->createQueryBuilder('recipe')
+            ->select('recipe','recipeCategories', 'category')
+            ->leftJoin('recipe.recipeCategories', 'recipeCategories')
+            ->leftJoin('recipeCategories.category', 'category')
+
+            ->orderBy('recipe.id', 'DESC')
+            ->setParameter('name_od_category', $searchCategory->getCategory())
+            ->where('category.name LIKE :name_od_category')
+
+            ->getQuery()
+            ->getResult();
+
+    }
+
+
 //    /**
 //     * @return Recipe[] Returns an array of Recipe objects
 //     */

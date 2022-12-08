@@ -1,0 +1,16 @@
+<div class="card card-recipe" data-id="{{ recipe.id }}">
+{#u class-u   {{ isActive ? 'active' : '' }}#}
+    {#    {% dump bowl %}#}
+
+    <div class="row">
+        <img src="{{ asset(recipe.image) }}" alt="{{ recipe.image }}" class="card-img-top" draggable="false" style="width:100px;height:100px">
+    </div>
+    <div class="row">
+        <div class="card-body">
+            <h2 class="card-title">{{ recipe.name }}</h2>
+            <p id="card-text">
+                {{ recipe.description }}
+            </p>
+        </div>
+    </div>
+</div>
