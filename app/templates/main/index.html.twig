@@ -10,7 +10,7 @@
             </div>
             <div class="col l2"></div>
             <div class="col l2 s12">
-                <select class="recipe-search-selector">
+                <select class="recipe-search-selector" id="recipe-search-selector">
                     <option value="" disabled selected>Pretraga recepta</option>
                     <option value="1">Po tipu recepta</option>
                     <option value="2">Po nazivu recepta</option>
@@ -28,10 +28,13 @@
     <div class="container">
         <div class="row">
             <div class="col l2"></div>
-            <div class="col l9">
-                {% include 'main/tag-search.html.twig' %}
+            <div class="col l9 radio-button-container" id="radio-button-container">
+
             </div>
             <div class="col l1"></div>
         </div>
     </div>
+{% endblock %}
+{% block javascriptsBody %}
+    <script src="{{ asset('js/select-search-type.js') }}"></script>
 {% endblock %}

@@ -44,17 +44,10 @@ class TagsRecipeAppFixture extends Fixture
         $recipes = $response->results;
         foreach ($recipes as $recipe) {
             $newRecipe = $this->recipeService->find($recipe->id);
-//            $newRecipe = new Recipe();
-//            $newRecipe -> setId($recipe->id);
-//            $newRecipe -> setName($recipe->name);
-//            $newRecipe -> setDescription($recipe->description);
-//            $newRecipe -> setImage($recipe->thumbnail_url);
             $recipeTags = $recipe->tags;
 
             foreach ($recipeTags as $recipeTag){
                 $tag = $this->categoryService->find($recipeTag->id);
-//                VarDumper::dump($recipeTag);
-//                VarDumper::dump($tag);exit;
                 $newRecipeCategories = new RecipeCategories($newRecipe, $tag);
                 $manager->persist($newRecipeCategories);
             }
