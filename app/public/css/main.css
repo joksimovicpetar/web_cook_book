@@ -35,14 +35,67 @@
     opacity: 1 !important;
     margin-left: 40px;
 }
+
 .tag-radio-label{
     margin-left: 70px;
     font-size: 20px;
-    line-height: 0px;
+    line-height: 0;
 }
+
 .radio-button{
     display: block;
     margin-left: auto;
     margin-right: auto;
 }
 
+.card-recipe{
+    box-shadow: 0 3px 10px 0 #aaa;
+    cursor: pointer;
+    height: 600px;
+    position: relative;
+    width: 400px;
+    border-radius: 7px;
+    display: block;
+    flex-direction: column;
+    align-items: center;
+    padding: 3px;
+    margin: 0 0 30px;
+}
+
+.active, .card-recipe:hover{
+    border-color: #B0413E;
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 7px;
+}
+
+.card .card-title{
+    font-size: 24px;
+    font-weight: bolder;
+    margin-top: 20px;
+    margin-left: 20px;
+    margin-right: 20px;
+    text-align: left;
+}
+
+.card-img-top{
+    text-align: center;
+    display: block;
+    vertical-align: bottom;
+
+    margin-left: 8px;
+    height: 200px;
+    width: 398px;
+}
+
+.img-row{
+    position: absolute;
+    width: 50%;
+    bottom: 10px;
+}
+
+#card-text{
+    text-align: left;
+    margin-left: 20px;
+    margin-right: 20px;
+}
