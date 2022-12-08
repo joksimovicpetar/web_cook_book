@@ -1,0 +1,37 @@
+version: '3.8'
+
+services:
+  database:
+    container_name: database2
+    image: mysql:8.0
+    command: --default-authentication-plugin=mysql_native_password
+    environment:
+      MYSQL_ROOT_PASSWORD: secret
+      MYSQL_DATABASE: web_cook_book
+      MYSQL_USER: joksa
+      MYSQL_PASSWORD: joksa
+    ports:
+      - '5306:3306'
+    volumes:
+      - ../mysql:/var/lib/mysql
+  php:
+    container_name: php2
+    build:
+      context: ./php
+    ports:
+      - '9002:9000'
+    volumes:
+      - ./app:/var/www/web_cook_book
+    depends_on:
+      - database
+  nginx:
+    container_name: nginx2
+    image: nginx:stable-alpine
+    ports:
+      - '8082:80'
+    volumes:
+      - ./app:/var/www/web_cook_book
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - php
+      - database
