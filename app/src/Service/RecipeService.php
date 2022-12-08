@@ -17,7 +17,8 @@ class RecipeService
         return $this->recipeRepository->find($id);
     }
 
-    function findRecipesForSpecificCategory($searchCategory){
-        return $this->recipeRepository->findRecipesForSpecificCategory($searchCategory);
+    function findRecipesForSpecificCategory($searchCategory, $offset = 3, $page = 1){
+        return $this->recipeRepository->findRecipesForSpecificCategory($searchCategory, $offset, $page);
     }
+
 }

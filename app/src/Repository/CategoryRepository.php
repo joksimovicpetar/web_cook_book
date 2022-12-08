@@ -39,10 +39,11 @@ class CategoryRepository extends ServiceEntityRepository
         }
     }
 
-    public function findCategories()
+    public function findCategories($category)
     {
         return $this->createQueryBuilder('category')
-
+            ->setParameter('name_of_category', $category)
+            ->where('category.name LIKE :name_of_category')
             ->orderBy('category.id', 'ASC')
             ->getQuery()
             ->getResult();

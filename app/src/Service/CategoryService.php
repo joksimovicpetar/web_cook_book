@@ -13,8 +13,8 @@ class CategoryService
         $this->categoryRepository = $categoryRepository;
     }
 
-    function findCategories(){
-        return $this->categoryRepository->findCategories();
+    function findCategories($category){
+        return $this->categoryRepository->findCategories($category);
     }
 
     function find($id){

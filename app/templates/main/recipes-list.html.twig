@@ -1,3 +1,4 @@
+<div class="row" >
 {% for recipe in recipes %}
 {#    {% if currentOrder and currentOrder.bowl %}#}
 {#        {% set activeBowl = bowl.id == currentOrder.bowl.id %}#}
@@ -8,5 +9,8 @@
     <div class="col l4 s6 recipe-card-js">
         {% include 'main/recipe-card.html.twig' with {'recipe': recipe} %}
     </div>
-
 {% endfor %}
+</div>
+<div class="row" >
+    <a class="waves-effect waves-light btn btn-load recipe-load" id="recipe-load-more" data-id="{{ category }}">Load more</a>
+</div>

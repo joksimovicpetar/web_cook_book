@@ -9,7 +9,9 @@ async function selectedSearchCategory(targetRoute, category) {
         const response = await recipesResponse.json();
         document.getElementById("recipe-list").innerHTML = response.html;
         selectSearchType();
-        selectedSearchCategory
+        load()
+        populatePagination()
+
         // window.location.reload();
 
     }
@@ -20,15 +22,14 @@ async function selectedSearchCategory(targetRoute, category) {
 }
 function selectSearchCategory(){
     const btn = document.getElementById('radio-button');
-// console.log(btn)
-//     for (const btn of btns) {
+
         btn.addEventListener('change', (event) => {
                 console.log(event.target.value)
                 const category = event.target.value;
                 selectedSearchCategory('http://localhost:8082/search_category', category)
             }
             , false);
-    // }
+
 
 }
 

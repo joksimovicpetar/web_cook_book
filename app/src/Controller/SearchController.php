@@ -4,8 +4,10 @@ namespace App\Controller;
 
 use App\DataTransferObjects\Search;
 use App\DataTransferObjects\SearchCategory;
+use App\Service\CategoryService;
 use App\Service\RecipeService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -30,10 +32,24 @@ class SearchController extends AbstractController
     public function search(SearchCategory $searchCategory, RecipeService $recipeService): Response
     {
         $recipes = $recipeService->findRecipesForSpecificCategory($searchCategory);
-
         $render = $this->renderView('main/recipes-list.html.twig', [
-            'recipes' => $recipes
+            'recipes' => $recipes,
+            'category'=> $searchCategory->getCategory()
         ]);
         return new JsonResponse(['html' => $render]);
+    }
+
+    #[Route('/load_more_category', name: 'app_load_more_category')]
+    public function loadMore(Request $request, RecipeService $recipeService, CategoryService $categoryService): Response
+    {
+        $offset = json_decode($request->getContent())->offset;
+        $page = json_decode($request->getContent())->page;
+        $category = $categoryService->findCategories(json_decode($request->getContent())->category)[0];
+        $recipes = $recipeService->findRecipesForSpecificCategory($category[0], $offset, $page);
+        $render = $this->renderView('main/recipes-list.html.twig', [
+            'recipes' => $recipes,
+            'category'=> $category
+        ]);
+        return new JsonResponse(['html' => $render, 'hasMoreResults' => count($recipes)==$offset]);
     }
 }

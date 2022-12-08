@@ -39,16 +39,17 @@ class RecipeRepository extends ServiceEntityRepository
         }
     }
 
-    public function findRecipesForSpecificCategory($searchCategory){
+    public function findRecipesForSpecificCategory($searchCategory, $offset, $page){
+        $firstResult = ($page-1)*$offset;
         return $this->createQueryBuilder('recipe')
             ->select('recipe','recipeCategories', 'category')
             ->leftJoin('recipe.recipeCategories', 'recipeCategories')
             ->leftJoin('recipeCategories.category', 'category')
-
             ->orderBy('recipe.id', 'DESC')
-            ->setParameter('name_od_category', $searchCategory->getCategory())
-            ->where('category.name LIKE :name_od_category')
-
+            ->setParameter('name_of_category', $searchCategory->getCategory())
+            ->where('category.name LIKE :name_of_category')
+            ->setFirstResult($firstResult)
+            ->setMaxResults($offset)
             ->getQuery()
             ->getResult();
 
