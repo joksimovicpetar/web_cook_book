@@ -31,7 +31,8 @@ class SearchController extends AbstractController
     #[Route('/search_category', name: 'app_search_category')]
     public function search(SearchCategory $searchCategory, RecipeService $recipeService): Response
     {
-        $recipes = $recipeService->findRecipesForSpecificCategory($searchCategory);
+        $recipes = $recipeService->findRecipesForSpecificCategory($searchCategory->getCategory());
+
         $render = $this->renderView('main/recipes-list.html.twig', [
             'recipes' => $recipes,
             'category'=> $searchCategory->getCategory()
@@ -44,8 +45,14 @@ class SearchController extends AbstractController
     {
         $offset = json_decode($request->getContent())->offset;
         $page = json_decode($request->getContent())->page;
-        $category = $categoryService->findCategories(json_decode($request->getContent())->category)[0];
-        $recipes = $recipeService->findRecipesForSpecificCategory($category[0], $offset, $page);
+        $category = ($categoryService->findCategories(json_decode($request->getContent())->category)[0])->getName();
+//        VarDumper::dump($category);exit;
+//        VarDumper::dump($offset);
+//        VarDumper::dump($page);exit;
+
+        $recipes = $recipeService->findRecipesForSpecificCategory($category, $offset, $page);
+//        VarDumper::dump($recipes);exit;
+
         $render = $this->renderView('main/recipes-list.html.twig', [
             'recipes' => $recipes,
             'category'=> $category

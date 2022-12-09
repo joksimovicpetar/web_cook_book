@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Entity\Recipe;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Component\VarDumper\VarDumper;
 
 /**
  * @extends ServiceEntityRepository<Recipe>
@@ -46,7 +47,7 @@ class RecipeRepository extends ServiceEntityRepository
             ->leftJoin('recipe.recipeCategories', 'recipeCategories')
             ->leftJoin('recipeCategories.category', 'category')
             ->orderBy('recipe.id', 'DESC')
-            ->setParameter('name_of_category', $searchCategory->getCategory())
+            ->setParameter('name_of_category', $searchCategory)
             ->where('category.name LIKE :name_of_category')
             ->setFirstResult($firstResult)
             ->setMaxResults($offset)

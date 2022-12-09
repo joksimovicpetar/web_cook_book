@@ -12,27 +12,31 @@ async function loadMore(category) {
         });
 
         const decodedResponse = await response.json();
+        // console.log('usao');
+        // document.getElementById(`recipe-load-more`).style.visibility = 'hidden';
+        // console.log('usao');
+
         document.getElementById(`recipe-list`).innerHTML += decodedResponse.html;
         // active("card-rows", "card-bowl")
-        page++;
-        hasMore = decodedResponse.hasMoreResults;
+        let hasMore = decodedResponse.hasMoreResults;
         if (hasMore===false){
             document.getElementById(`recipe-load-more`).style.visibility = 'hidden';
         }
+        load(category)
     }
     catch (e) {
         console.error('Error while creating item order')
     }
 }
 
-function load(){
-    const loadMoreButtons = document.getElementsByClassName("btn-load");
-    for (const loadMoreButton of loadMoreButtons) {
-        loadMoreButton.addEventListener('click', () => {
-                const category = loadMoreButton.getAttribute("data-id");
-                loadMore(category)
-            }
-            , false);
-    }
+function load(category){
+    const loadMoreButton = document.getElementById(`recipe-load-more`);
+
+    loadMoreButton.addEventListener('click', () => {
+                // const category = loadMoreButton.getAttribute("data-id");
+            loadMore(category)
+        }
+        , false);
+
 }
 
