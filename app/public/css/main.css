@@ -126,6 +126,32 @@
 
 }
 
+.btn-search{
+    color: white;
+    border-color: white;
+    background-color: #007bff;
+    border-radius: 7px;
+    border-style: solid;
+    border-width: 1px;
+    height: 35px;
+    line-height: 29px;
+    width: 100px;
+    font-size: 12px;
+    padding: 1px;
+    z-index: 0;
+    text-align: center;
+    margin: auto;
+    display: flex;
+    justify-content: center;
+}
+
+.btn-search:hover {
+    color: #007bff;
+    background-color: white;
+    border-color: #007bff;
+
+}
+
 #form-log-in{
     width: 400px;
 }

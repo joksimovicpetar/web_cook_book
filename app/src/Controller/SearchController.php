@@ -22,7 +22,7 @@ class SearchController extends AbstractController
         if ($search->getType()==1) {
             $render = $this->renderView('main/tag-search.html.twig');
         } else {
-            $render = $this->render('search/index.html.twig');
+            $render = $this->renderView('main/search-bar.html.twig');
         }
 
         return new JsonResponse(['html' => $render]);
@@ -59,4 +59,24 @@ class SearchController extends AbstractController
         ]);
         return new JsonResponse(['html' => $render, 'hasMoreResults' => count($recipes)==$offset]);
     }
+
+    #[Route('/search_name', name: 'app_search_name')]
+    public function searchName(SearchCategory $searchCategory, RecipeService $recipeService): Response
+    {
+        $recipes = $recipeService->findRecipesForSpecificCategory($searchCategory->getCategory());
+
+        $render = $this->renderView('main/recipes-list.html.twig', [
+            'recipes' => $recipes,
+            'category'=> $searchCategory->getCategory()
+        ]);
+        return new JsonResponse(['html' => $render]);
+    }
+
+
+    #[Route('/modal', name: 'app_modal')]
+    public function modal(): Response
+    {
+        return $this->render('main/modal.html.twig');
+    }
+
 }

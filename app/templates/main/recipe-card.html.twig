@@ -1,6 +1,5 @@
-<div class="card card-recipe" data-id="{{ recipe.id }}">
-{#u class-u   {{ isActive ? 'active' : '' }}#}
-    {#    {% dump bowl %}#}
+<div class="card card-recipe"  data-id="{{ recipe.id }}" >
+
     <div class="row">
         <div class="card-body">
             <h2 class="card-title">{{ recipe.name }}</h2>
@@ -13,3 +12,5 @@
         <img src="{{ asset(recipe.image) }}" alt="{{ recipe.image }}" class="card-img-top" draggable="false">
     </div>
 </div>
+
+

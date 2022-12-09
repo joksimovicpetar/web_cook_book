@@ -8,6 +8,7 @@ async function selectedSearchCategory(targetRoute, category) {
         });
         const response = await recipesResponse.json();
         document.getElementById("recipe-list").innerHTML = response.html;
+        openModal()
         load(category)
         // window.location.reload();
 

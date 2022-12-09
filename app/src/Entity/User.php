@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
@@ -24,6 +26,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(length: 255)]
     private ?string $password = null;
+
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: UserCart::class)]
+    private Collection $userCarts;
+
+    public function __construct()
+    {
+        $this->userCarts = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -79,5 +89,35 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
+    }
+
+    /**
+     * @return Collection<int, UserCart>
+     */
+    public function getUserCarts(): Collection
+    {
+        return $this->userCarts;
+    }
+
+    public function addUserCart(UserCart $userCart): self
+    {
+        if (!$this->userCarts->contains($userCart)) {
+            $this->userCarts->add($userCart);
+            $userCart->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUserCart(UserCart $userCart): self
+    {
+        if ($this->userCarts->removeElement($userCart)) {
+            // set the owning side to null (unless already changed)
+            if ($userCart->getUser() === $this) {
+                $userCart->setUser(null);
+            }
+        }
+
+        return $this;
     }
 }

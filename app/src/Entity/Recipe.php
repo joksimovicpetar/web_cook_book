@@ -26,9 +26,13 @@ class Recipe
     #[ORM\OneToMany(mappedBy: 'recipe', targetEntity: RecipeCategories::class)]
     private Collection $recipeCategories;
 
+    #[ORM\OneToMany(mappedBy: 'recipe', targetEntity: UserCartRecipe::class)]
+    private Collection $userCartRecipes;
+
     public function __construct()
     {
         $this->recipeCategories = new ArrayCollection();
+        $this->userCartRecipes = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -110,6 +114,36 @@ class Recipe
             // set the owning side to null (unless already changed)
             if ($recipeCategory->getRecipe() === $this) {
                 $recipeCategory->setRecipe(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, UserCartRecipe>
+     */
+    public function getUserCartRecipes(): Collection
+    {
+        return $this->userCartRecipes;
+    }
+
+    public function addUserCartRecipe(UserCartRecipe $userCartRecipe): self
+    {
+        if (!$this->userCartRecipes->contains($userCartRecipe)) {
+            $this->userCartRecipes->add($userCartRecipe);
+            $userCartRecipe->setRecipe($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUserCartRecipe(UserCartRecipe $userCartRecipe): self
+    {
+        if ($this->userCartRecipes->removeElement($userCartRecipe)) {
+            // set the owning side to null (unless already changed)
+            if ($userCartRecipe->getRecipe() === $this) {
+                $userCartRecipe->setRecipe(null);
             }
         }
 

@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 
-
 {% block body %}
+    {% include 'main/modal.html.twig' %}
     <div class="container">
         <div class="row">
             <div class="col l1"></div>
@@ -28,22 +28,30 @@
     <div class="container">
         <div class="row">
             <div class="col l2"></div>
-            <div class="col l9 radio-button-container" id="radio-button-container">
+            <div class="col l8 radio-button-container" id="radio-button-container">
 
             </div>
-            <div class="col l1"></div>
+            <div class="col l2"></div>
         </div>
         <div class="row" id="recipe-list">
 
         </div>
         <div class="row" >
-            <a class="waves-effect waves-light btn btn-load recipe-load" id="recipe-load-more" >Load more</a>
+            <!-- Modal Trigger -->
+            <a class="waves-effect waves-light btn modal-trigger" href="#modal1">Modal</a>
+            <a class="waves-effect waves-light btn btn-load recipe-load" id="recipe-load-more">Load more</a>
         </div>
 
     </div>
 {% endblock %}
 {% block javascriptsBody %}
+    <script>
+        var elem = document.querySelector('.modal');
+        var options = {};
+        var instance = new M.Modal(elem, options);
+    </script>
     <script src="{{ asset('js/select-search-type.js') }}"></script>
     <script src="{{ asset('js/choose-category.js') }}"></script>
     <script src="{{ asset('js/pagination.js') }}"></script>
+{#    <script src="{{ asset('js/modal.js') }}"></script>#}
 {% endblock %}
