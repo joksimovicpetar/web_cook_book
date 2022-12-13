@@ -18,7 +18,6 @@ class SearchController extends AbstractController
     #[Route('/search', name: 'app_search')]
     public function index(Search $search): Response
     {
-//        VarDumper::dump($search);exit;
         if ($search->getType()==1) {
             $render = $this->renderView('main/tag-search.html.twig');
         } else {
@@ -46,12 +45,8 @@ class SearchController extends AbstractController
         $offset = json_decode($request->getContent())->offset;
         $page = json_decode($request->getContent())->page;
         $category = ($categoryService->findCategories(json_decode($request->getContent())->category)[0])->getName();
-//        VarDumper::dump($category);exit;
-//        VarDumper::dump($offset);
-//        VarDumper::dump($page);exit;
 
         $recipes = $recipeService->findRecipesForSpecificCategory($category, $offset, $page);
-//        VarDumper::dump($recipes);exit;
 
         $render = $this->renderView('main/recipes-list.html.twig', [
             'recipes' => $recipes,
@@ -60,14 +55,15 @@ class SearchController extends AbstractController
         return new JsonResponse(['html' => $render, 'hasMoreResults' => count($recipes)==$offset]);
     }
 
-    #[Route('/search_name', name: 'app_search_name')]
-    public function searchName(SearchCategory $searchCategory, RecipeService $recipeService): Response
-    {
-        $recipes = $recipeService->findRecipesForSpecificCategory($searchCategory->getCategory());
 
+    #[Route('/load_more_search', name: 'app_load_more_search')]
+    public function loadMoreSearch(Request $request, RecipeService $recipeService): Response
+    {
+        $searchParameter = json_decode($request->getContent())->searchParameter;
+
+        $recipes = $recipeService->findSearchedRecipes($searchParameter);
         $render = $this->renderView('main/recipes-list.html.twig', [
-            'recipes' => $recipes,
-            'category'=> $searchCategory->getCategory()
+            'recipes' => $recipes
         ]);
         return new JsonResponse(['html' => $render]);
     }

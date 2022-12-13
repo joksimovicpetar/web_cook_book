@@ -226,3 +226,7 @@ input[type=password]:not(.browser-default):focus:not([readonly])+label{
     text-align: center;
     border-radius: 7px;
 }
+
+select:focus {
+    outline: 1px solid #007bff;
+}

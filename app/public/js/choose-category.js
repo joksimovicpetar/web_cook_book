@@ -8,13 +8,17 @@ async function selectedSearchCategory(targetRoute, category) {
         });
         const response = await recipesResponse.json();
         document.getElementById("recipe-list").innerHTML = response.html;
-        openModal()
+        document.getElementById(`recipe-list`).style.visibility = 'visible';
+        document.getElementById(`recipe-load-more`).style.visibility = 'visible';
+
+
+        // openModal()
         load(category)
         // window.location.reload();
 
     }
     catch (e) {
-        console.error('Error')
+        console.error('Error 1')
         console.log(e)
     }
 }

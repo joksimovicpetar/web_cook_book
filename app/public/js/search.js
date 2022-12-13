@@ -1,31 +1,32 @@
-async function deleteOrderItem(routeEdit, dataId) {
-    // console.log(dataId);
+
+const LOAD_SEARCH_ROUTE = 'http://localhost:8082/load_more_search';
+
+async function searchItem(parameter) {
 
     try{
-        const deleteResponse = await fetch(routeEdit, {
+        const searchResponse = await fetch(LOAD_SEARCH_ROUTE, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({id: parseInt(dataId)}),
+            body: JSON.stringify({searchParameter: parameter}),
         });
 
-        const response = await deleteResponse.json();
-        document.getElementById("user_order_table").innerHTML = response.html;
-        deleteItem()
-        updateItem()
-
+        const response = await searchResponse.json();
+        document.getElementById(`recipe-list`).innerHTML = response.html;
+        document.getElementById(`recipe-list`).style.visibility = 'visible';
+        document.getElementById(`recipe-load-more`).style.visibility = 'hidden';
     }
     catch (e) {
-        console.error('Error while deleting item order')
+        console.error('Error while searching')
         console.log(e)
     }
 }
-function deleteItem(){
+function search(){
     const btns = document.getElementsByClassName("btn-search");
     for (const btn of btns) {
         btn.addEventListener('click', () => {
                 alert('clicked')
                 const parameter = document.getElementById("search-bar").value;
-                deleteOrderItem('http://localhost:8082/user_order/delete', parameter)
+                searchItem(parameter)
             }
             , false);
     }

@@ -8,13 +8,18 @@ async function selectedSearchType(targetRoute, type) {
         });
         const response = await searchTypeResponse.json();
         document.getElementById("radio-button-container").innerHTML = response.html;
+        document.getElementById(`recipe-list`).style.visibility = 'hidden';
 
-        selectSearchCategory();
+        if (type==='1') {
+            selectSearchCategory();
+        }if (type==='2') {
+            search();
+        }
         // window.location.reload();
 
     }
     catch (e) {
-        console.error('Error')
+        console.error('Error 2')
         console.log(e)
     }
 }

@@ -56,6 +56,17 @@ class RecipeRepository extends ServiceEntityRepository
 
     }
 
+    public function findSearchedRecipes($searchParameter){
+        return $this->createQueryBuilder('recipe')
+            ->select('recipe')
+            ->orderBy('recipe.id', 'DESC')
+            ->setParameter('search_parameter', '%'.$searchParameter.'%')
+            ->where('recipe.name LIKE :search_parameter')
+            ->getQuery()
+            ->getResult();
+
+    }
+
 
 //    /**
 //     * @return Recipe[] Returns an array of Recipe objects
