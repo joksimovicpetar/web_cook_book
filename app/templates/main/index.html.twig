@@ -37,18 +37,31 @@
 
         </div>
         <div class="row" >
-{#            <!-- Modal Trigger -->#}
-            <a class="waves-effect waves-light btn modal-trigger" href="#modal1">Modal</a>
             <a class="waves-effect waves-light btn btn-load recipe-load" id="recipe-load-more" style="visibility: hidden">Load more</a>
         </div>
 
     </div>
 {% endblock %}
 {% block javascriptsBody %}
+
     <script>
-        var elem = document.querySelector('.modal');
-        var options = {};
-        var instance = new M.Modal(elem, options);
+        $(document).ready(function () {
+            $('.modal').modal();
+        })
+
+        function displayRecipeDetails(recipe) {
+            recipe_id = recipe.getAttribute("data-id");
+
+            fetch(`http://localhost:8082/recipe_detail/${recipe_id}`, {
+                        method: 'GET',
+                        headers: {'Content-Type': 'application/json'},
+                    }).then(function(response) {
+                        return response.text();
+                    }).then(function(data) {
+                        $('#modal').html(data);
+                        $('#modal').modal('open');
+                    })
+        }
     </script>
     <script src="{{ asset('js/select-search-type.js') }}"></script>
     <script src="{{ asset('js/choose-category.js') }}"></script>

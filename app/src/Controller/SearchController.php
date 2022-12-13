@@ -69,10 +69,14 @@ class SearchController extends AbstractController
     }
 
 
-    #[Route('/modal', name: 'app_modal')]
-    public function modal(): Response
+    #[Route('/recipe_detail/{id}', name: 'app_modal')]
+    public function modal(Request $request, RecipeService $recipeService, $id): Response
     {
-        return $this->render('main/modal.html.twig');
+        $recipeDetails = $recipeService->find($id);
+        VarDumper::dump($recipeDetails);
+        return $this->render('main/modal-content.html.twig', [
+            'message' => 'Message'
+        ]);
     }
 
 }
