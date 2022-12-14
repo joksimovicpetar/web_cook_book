@@ -1,7 +1,23 @@
 <div class="modal-content">
-    <h4>Modal Header</h4>
-    <p>{{ message ?? '' }}</p>
+    <div class="row">
+        <div class="col s6">
+                <div class="card-body">
+                    <h2 class="modal-card-title">{{ recipeDetails.name ?? '' }}</h2>
+                    <p id="modal-card-text">
+                        {{ recipeDetails.description ?? '' }}
+                    </p>
+                </div>
+        </div>
+        <div class="col s6">
+            <div class="row">
+                <img src="{{ asset(recipeDetails.image ?? '' ) }}" alt="{{ recipeDetails.image ?? '' }}" class="card-img-right" draggable="false">
+            </div>
+            <div class="row">
+                <a class="modal-close waves-effect waves-light btn btn-add" id="btn-add" data-id="{{ recipeDetails.id ?? '' }}">Dodaj u korpu</a>
+            </div>
+        </div>
+    </div>
 </div>
-<div class="modal-footer">
-    <a href="#!" class="modal-close waves-effect waves-green btn-flat">Agree</a>
-</div>
+
+
+

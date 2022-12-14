@@ -73,9 +73,8 @@ class SearchController extends AbstractController
     public function modal(Request $request, RecipeService $recipeService, $id): Response
     {
         $recipeDetails = $recipeService->find($id);
-        VarDumper::dump($recipeDetails);
         return $this->render('main/modal-content.html.twig', [
-            'message' => 'Message'
+            'recipeDetails' => $recipeDetails
         ]);
     }
 

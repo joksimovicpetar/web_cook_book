@@ -12,7 +12,7 @@
     background-color: #f2f2f2;
 }
 
-.btn-cart{
+.btn-cart, .btn-add{
     height: 43px;
     margin-top: 30px;
     line-height: 40px;
@@ -24,7 +24,7 @@
     width: 200px;
 }
 
-.btn-cart:hover{
+.btn-cart:hover, .btn-add:hover{
     color: #007bff;
     background-color: white;
     border-color: #007bff;
@@ -78,6 +78,15 @@
     text-align: left;
 }
 
+.modal-card-title{
+    font-size: 24px;
+    font-weight: bolder;
+    margin-top: 20px;
+    margin-left: 20px;
+    margin-right: 20px;
+    text-align: left;
+}
+
 .card-img-top{
     text-align: center;
     display: block;
@@ -98,6 +107,19 @@
     text-align: left;
     margin-left: 20px;
     margin-right: 20px;
+}
+
+#modal-card-text{
+    text-align: left;
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+.card-img-right{
+    float: right;
+    margin-right: 8px;
+    height: 200px;
+    width: 300px;
 }
 
 .btn-load{
@@ -227,6 +249,7 @@ input[type=password]:not(.browser-default):focus:not([readonly])+label{
     border-radius: 7px;
 }
 
-select:focus {
+select:focus{
     outline: 1px solid #007bff;
 }
+
