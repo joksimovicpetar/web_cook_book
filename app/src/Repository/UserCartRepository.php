@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Entity\UserCart;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Component\Security\Core\Security;
 
 /**
  * @extends ServiceEntityRepository<UserCart>
@@ -16,9 +17,12 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class UserCartRepository extends ServiceEntityRepository
 {
-    public function __construct(ManagerRegistry $registry)
+    private Security $security;
+
+    public function __construct(ManagerRegistry $registry, Security $security)
     {
         parent::__construct($registry, UserCart::class);
+        $this->security = $security;
     }
 
     public function save(UserCart $entity, bool $flush = false): void
@@ -37,6 +41,21 @@ class UserCartRepository extends ServiceEntityRepository
         if ($flush) {
             $this->getEntityManager()->flush();
         }
+    }
+
+    public function findLastActiveCart()
+    {
+        $user = $this->security->getUser()->getId();
+
+        return $this->createQueryBuilder('user_cart')
+            ->select('user_cart','user')
+            ->leftJoin('user_cart.user', 'user')
+            ->orderBy('user_cart.id', 'DESC')
+            ->setParameter('user_check', $user)
+            ->where('user.id LIKE :user_check')
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getOneOrNullResult();
     }
 
 //    /**

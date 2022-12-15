@@ -24,10 +24,8 @@ class UserCartRecipeRepository extends ServiceEntityRepository
     public function save(UserCartRecipe $entity, bool $flush = false): void
     {
         $this->getEntityManager()->persist($entity);
+        $this->getEntityManager()->flush();
 
-        if ($flush) {
-            $this->getEntityManager()->flush();
-        }
     }
 
     public function remove(UserCartRecipe $entity, bool $flush = false): void

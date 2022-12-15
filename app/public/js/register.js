@@ -33,7 +33,7 @@ async function registerUser(routeEdit, routeNext) {
 function register(){
     const btn = document.getElementById("register");
     btn.addEventListener('click', () => {
-            registerUser('http://localhost:8082/register/write','http://localhost:8082/login/?registered=true')
+            registerUser('http://localhost:8082/register/write','http://localhost:8082/?registered=true')
         }
         , false);
 }

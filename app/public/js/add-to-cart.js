@@ -15,6 +15,7 @@ async function addToCart(route, id) {
 function add() {
     let active_card = document.getElementsByClassName("btn-add")[0];
     let id = active_card.getAttribute("data-id");
+    console.log(id);
     const btn = document.getElementById("btn-add");
     btn.addEventListener('click', () => {
 

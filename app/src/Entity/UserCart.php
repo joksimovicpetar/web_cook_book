@@ -22,10 +22,19 @@ class UserCart
     #[ORM\OneToMany(mappedBy: 'userCart', targetEntity: UserCartRecipe::class)]
     private Collection $userCartRecipes;
 
-    public function __construct()
+    #[ORM\Column(length: 255)]
+    private ?string $status = null;
+
+    /**
+     * @param User|null $user
+     * @param string|null $status
+     */
+    public function __construct(?User $user, ?string $status)
     {
-        $this->userCartRecipes = new ArrayCollection();
+        $this->user = $user;
+        $this->status = $status;
     }
+
 
     public function getId(): ?int
     {
@@ -70,6 +79,18 @@ class UserCart
                 $userCartRecipe->setUserCart(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getStatus(): ?string
+    {
+        return $this->status;
+    }
+
+    public function setStatus(string $status): self
+    {
+        $this->status = $status;
 
         return $this;
     }

@@ -4,8 +4,11 @@ namespace App\Controller;
 
 use App\DataTransferObjects\Search;
 use App\DataTransferObjects\SearchCategory;
+use App\Entity\RecipeCategories;
 use App\Service\CategoryService;
+use App\Service\RecipeCategoriesService;
 use App\Service\RecipeService;
+use App\Service\UserCartRecipeService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -78,4 +81,13 @@ class SearchController extends AbstractController
         ]);
     }
 
+    #[Route('/add_to_cart', name: 'app_add_to_cart', methods: ['POST'])]
+    public function addToCart(Request $request, UserCartRecipeService $userCartRecipeService)
+    {
+        $userCartRecipeService->addToCart(json_decode($request->getContent())->id);
+
+        $response = new Response();
+        $response->setStatusCode(Response::HTTP_OK);
+        $response->send();
+    }
 }

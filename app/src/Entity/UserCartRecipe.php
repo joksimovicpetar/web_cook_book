@@ -13,13 +13,24 @@ class UserCartRecipe
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\ManyToOne(targetEntity: 'UserCart',inversedBy: 'userCartRecipes'),
+    #[ORM\ManyToOne(targetEntity: 'UserCart', cascade: ['persist', 'remove'],inversedBy: 'userCartRecipes'),
     ORM\JoinColumn(name: 'user_cart_id', referencedColumnName: 'id')]
     private ?UserCart $userCart = null;
 
-    #[ORM\ManyToOne(inversedBy: 'userCartRecipes'),
+    #[ORM\ManyToOne(cascade: ['persist', 'remove'], inversedBy: 'userCartRecipes'),
     ORM\JoinColumn(name: 'recipe_id', referencedColumnName: 'id')]
     private ?Recipe $recipe = null;
+
+    /**
+     * @param UserCart|null $userCart
+     * @param Recipe|null $recipe
+     */
+    public function __construct(?UserCart $userCart, ?Recipe $recipe)
+    {
+        $this->userCart = $userCart;
+        $this->recipe = $recipe;
+    }
+
 
     public function getId(): ?int
     {
