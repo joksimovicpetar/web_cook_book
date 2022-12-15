@@ -53,4 +53,10 @@ class UserCartRecipeService
         }
 
     }
+
+    public function findRecipesInCart()
+    {
+        $lastCart = $this->userCartService->findLastActiveCart();
+        return $this->userCartRecipeRepository->findRecipesInCart($lastCart);
+    }
 }

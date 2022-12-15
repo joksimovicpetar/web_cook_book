@@ -1,6 +1,5 @@
 async function addToCart(route, id) {
     try{
-        alert('oh yeeeeah!')
         await fetch(route, {
 
             method: 'POST',

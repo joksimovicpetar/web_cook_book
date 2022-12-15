@@ -90,4 +90,15 @@ class SearchController extends AbstractController
         $response->setStatusCode(Response::HTTP_OK);
         $response->send();
     }
+
+    #[Route('/view_cart', name: 'app_view_cart')]
+    public function viewCart( UserCartRecipeService $userCartRecipeService): Response
+    {
+        $cart = $userCartRecipeService->findRecipesInCart();
+//        VarDumper::dump($recipesInCart);exit;
+        $render = $this->renderView('main/cart.html.twig', [
+            'cart' => $cart
+        ]);
+        return new JsonResponse(['html' => $render]);
+    }
 }

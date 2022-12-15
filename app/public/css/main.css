@@ -265,3 +265,13 @@ select:focus{
     outline: 1px solid #007bff;
 }
 
+.cart-recipe-title{
+    font-size: 24px;
+    font-weight: bolder;
+    margin-bottom: 0;
+}
+.cart-title{
+    margin-bottom: 50px
+}
+
+

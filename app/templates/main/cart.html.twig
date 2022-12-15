@@ -1,0 +1,21 @@
+<div class="container cart">
+    <div class="column s12">
+        <h2 class="cart-title">Moja korpa</h2>
+    </div>
+    <hr size="3" width="1000" color="#007bff">
+    {% for userCartRecipe in cart%}
+        <div class="row cart-element">
+            <div class="column l6 s12">
+                <div class="row">
+                    <p class="cart-recipe-title">{{ userCartRecipe.recipe.name }}</p>
+                </div>
+                <div class="row">
+                    <p id="card-text">
+                        {{ userCartRecipe.recipe.description }}
+                    </p>
+                </div>
+            </div>
+        </div>
+        <hr size="1" width="1000" color="black">
+    {% endfor %}
+</div>

@@ -37,6 +37,19 @@ class UserCartRecipeRepository extends ServiceEntityRepository
         }
     }
 
+    public function findRecipesInCart($lastCart){
+        return $this->createQueryBuilder('user_cart_recipe')
+            ->select('user_cart_recipe', 'userCart')
+            ->leftJoin('user_cart_recipe.userCart', 'userCart')
+            ->orderBy('user_cart_recipe.id', 'DESC')
+            ->setParameter('id_check', $lastCart->getId())
+            ->setParameter('status_check', 'active')
+            ->where('userCart.id LIKE :id_check')
+            ->andWhere('userCart.status LIKE :status_check')
+            ->getQuery()
+            ->getResult();
+    }
+
 //    /**
 //     * @return UserCartRecipe[] Returns an array of UserCartRecipe objects
 //     */
