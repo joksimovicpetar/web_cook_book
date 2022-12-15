@@ -8,6 +8,7 @@ async function openCart(route) {
         const response = await viewCartResponse.json();
         document.getElementById("radio-button-container").innerHTML = response.html;
         document.getElementById(`recipe-list`).style.visibility = 'hidden';
+        order();
     }
     catch (e) {
         console.error('Error while creating order')
@@ -23,3 +24,4 @@ function viewCart() {
 }
 
 viewCart();
+order();

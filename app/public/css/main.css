@@ -24,7 +24,7 @@
     width: 200px;
 }
 
-.btn-logout {
+.btn-logout, .btn-order {
     height: 43px;
     margin-top: 30px;
     line-height: 40px;
@@ -36,7 +36,7 @@
     width: 100px;
 }
 
-.btn-cart:hover, .btn-add:hover, .btn-logout:hover{
+.btn-cart:hover, .btn-add:hover, .btn-logout:hover, .btn-order:hover{
     color: #007bff;
     background-color: white;
     border-color: #007bff;

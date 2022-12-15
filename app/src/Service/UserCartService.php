@@ -22,5 +22,13 @@ class UserCartService
     function findLastActiveCart(){
         return $this->userCartRepository->findLastActiveCart();
     }
+
+    public function completeOrder()
+    {
+        $lastCart = $this->findLastActiveCart();
+        $lastCart->setStatus('completed');
+        $this->userCartRepository->save($lastCart);
+
+    }
 }
 

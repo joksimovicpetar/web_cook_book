@@ -9,6 +9,7 @@ use App\Service\CategoryService;
 use App\Service\RecipeCategoriesService;
 use App\Service\RecipeService;
 use App\Service\UserCartRecipeService;
+use App\Service\UserCartService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -100,5 +101,15 @@ class SearchController extends AbstractController
             'cart' => $cart
         ]);
         return new JsonResponse(['html' => $render]);
+    }
+
+    #[Route('/order', name: 'app_order')]
+    public function order( UserCartService $userCartService)
+    {
+        $userCartService->completeOrder();
+//        VarDumper::dump($recipesInCart);exit;
+        $response = new Response();
+        $response->setStatusCode(Response::HTTP_OK);
+        $response->send();
     }
 }

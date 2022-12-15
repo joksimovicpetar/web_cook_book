@@ -28,10 +28,8 @@ class UserCartRepository extends ServiceEntityRepository
     public function save(UserCart $entity, bool $flush = false): void
     {
         $this->getEntityManager()->persist($entity);
+        $this->getEntityManager()->flush();
 
-        if ($flush) {
-            $this->getEntityManager()->flush();
-        }
     }
 
     public function remove(UserCart $entity, bool $flush = false): void
