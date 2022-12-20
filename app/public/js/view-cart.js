@@ -6,7 +6,9 @@ async function openCart(route) {
             headers: { 'Content-Type': 'application/json' },
         });
         const response = await viewCartResponse.json();
-        document.getElementById("radio-button-container").innerHTML = response.html;
+        document.getElementById("cart-container").style.visibility = 'visible';
+        document.getElementById("cart-container").innerHTML = response.html;
+        document.getElementById("radio-button-container").style.visibility = 'hidden';
         document.getElementById(`recipe-list`).style.visibility = 'hidden';
         order();
     }

@@ -5,8 +5,8 @@ namespace App\Service;
 use App\Entity\UserCart;
 use App\Entity\UserCartRecipe;
 use App\Repository\UserCartRecipeRepository;
+use App\Util\OrderStatusUtil;
 use Symfony\Component\Security\Core\Security;
-use Symfony\Component\VarDumper\VarDumper;
 
 
 class UserCartRecipeService
@@ -38,13 +38,10 @@ class UserCartRecipeService
         $recipe = $this->recipeService->find($id);
         $user = $this->security->getUser();
         $lastCart = $this->userCartService->findLastActiveCart();
-//        VarDumper::dump($recipe);
-//        VarDumper::dump($user);
-//        VarDumper::dump($lastCart);exit;
 
 
-        if ($lastCart == null || $lastCart->getStatus() == 'completed'){
-            $cart = new UserCart($user,'active');
+        if ($lastCart == null || $lastCart->getStatus() == OrderStatusUtil::ORDER_STATUS[2]){
+            $cart = new UserCart($user,OrderStatusUtil::ORDER_STATUS[1]);
             $userCartRecipeRepository = new UserCartRecipe($cart,$recipe);
             $this->userCartRecipeRepository->save($userCartRecipeRepository);
         } else {

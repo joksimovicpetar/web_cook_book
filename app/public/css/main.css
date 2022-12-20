@@ -75,7 +75,7 @@
 }
 
 .active, .card-recipe:hover{
-    border-color: #B0413E;
+    border-color: #007bff;
     border-style: solid;
     border-width: 1px;
     border-radius: 7px;
@@ -268,7 +268,7 @@ select:focus{
 .cart-recipe-title{
     font-size: 24px;
     font-weight: bolder;
-    margin-bottom: 0;
+    margin-left: 20px;
 }
 .cart-title{
     margin-bottom: 50px

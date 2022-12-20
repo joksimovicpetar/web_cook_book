@@ -4,6 +4,7 @@ namespace App\Service;
 
 
 use App\Repository\UserCartRepository;
+use App\Util\OrderStatusUtil;
 
 
 class UserCartService
@@ -26,7 +27,7 @@ class UserCartService
     public function completeOrder()
     {
         $lastCart = $this->findLastActiveCart();
-        $lastCart->setStatus('completed');
+        $lastCart->setStatus(OrderStatusUtil::ORDER_STATUS[2]);
         $this->userCartRepository->save($lastCart);
 
     }

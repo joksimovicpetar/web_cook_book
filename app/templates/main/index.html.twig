@@ -9,7 +9,9 @@
         <div class="row">
             <div class="col l1"></div>
             <div class="col l2 m6 s12">
-                <img class="logo-img" id="logo" alt="logo" src="{{ asset("uploads/webkuvar.png") }}" draggable="false">
+                <a href={{ path('app_main') }}>
+                    <img class="logo-img" id="logo" alt="logo" src="{{ asset("uploads/webkuvar.png") }}" draggable="false">
+                </a>
             </div>
             <div class="col l1"></div>
             <div class="col l3 m6 s12">
@@ -35,6 +37,11 @@
 
             </div>
             <div class="col l2"></div>
+        </div>
+        <div class="row">
+            <div class="col l12 cart-container" id="cart-container">
+
+            </div>
         </div>
         <div class="row" id="recipe-list">
 

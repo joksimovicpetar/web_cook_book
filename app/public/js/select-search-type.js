@@ -7,6 +7,8 @@ async function selectedSearchType(targetRoute, type) {
             body: JSON.stringify({type: type})
         });
         const response = await searchTypeResponse.json();
+        document.getElementById(`cart-container`).style.visibility = 'hidden';
+        document.getElementById("radio-button-container").style.visibility = 'visible';
         document.getElementById("radio-button-container").innerHTML = response.html;
         document.getElementById(`recipe-list`).style.visibility = 'hidden';
 
